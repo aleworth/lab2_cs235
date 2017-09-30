@@ -7,7 +7,7 @@ using namespace std;
 
 template<typename T>
 
-class LinkedList : public LinkedListInterface ()
+class LinkedList : public LinkedListInterface<T>
 {
   public:
     LinkedList();
@@ -64,7 +64,7 @@ class LinkedList : public LinkedListInterface ()
         Node* temp2 = head;
         while (temp2->next->data != T) {
             temp2 = temp2->next;
-            if (temp2->next == NULL && temp2->next->data != T) {
+            if ((temp2->next == NULL) && (temp2->next->data != T)) {
               break;
             }
         }
