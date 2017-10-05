@@ -32,7 +32,7 @@ class LinkedList : public LinkedListInterface<T>
 			}
 		}
 	}
-    
+
 	void insertHead(T) {
 
 		bool check = LinkedList::find(T);
@@ -131,7 +131,7 @@ class LinkedList : public LinkedListInterface<T>
 			cout << "T is not in the current Linked List." << endl;
 		}
     }
-    
+
 	void clear() {
 		while (head != NULL) {
 			LinkedList::remove(head);
@@ -153,7 +153,7 @@ class LinkedList : public LinkedListInterface<T>
 			return temp5->data;
 		}
 	}
-	
+
 	int size() {
 		int i = 0;
 		if (head == NULL) {
@@ -167,14 +167,14 @@ class LinkedList : public LinkedListInterface<T>
 		delete temp4;
 		return i;
 	}
-    
+
 	string toString() {
 		if (head == NULL) {
 			string fail = "Failure!";
 			return fail;
 		}
 		else {
-			stringstream ss = "";
+			stringstream ss;
 			Node* temp6 = head;
 			while (temp6 != NULL) {
 				if (temp6 == head) {
@@ -196,7 +196,7 @@ class LinkedList : public LinkedListInterface<T>
       struct Node {
         T data;
         Node* next;
-        Node(const T& data_item, Node* next_ptr = Null) : data(data_item), next(next_ptr) {}
+        Node(const T& data_item, Node* next_ptr = NULL) : data(data_item), next(next_ptr) {}
       }
       Node* head = NULL;
 
