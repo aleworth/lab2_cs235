@@ -20,22 +20,17 @@ class LinkedList : public LinkedListInterface<T>
 	void insertHead(T value) {
 
 		bool check = find(value);
-		if (check == true) {
+		if (check == false) {
 
 			if (head == NULL) {
 				head = new Node(value);
 				head->next = NULL;
-
+        cout << "--Inserted with new Head" << endl;
 			}
 			else {
-				Node* temp = new Node(value);
-				temp->next = head;
-				head = temp;
-				delete temp;
+				head = new  Node(value, head);
+        cout << "--Inserted at Head with existing" << endl;
 			}
-		}
-		else {
-			cout << "T is already in the current Linked List." << endl;
 		}
   };
 
@@ -47,18 +42,12 @@ class LinkedList : public LinkedListInterface<T>
 				insertHead(value);
 			}
 			else if (head != NULL) {
-				Node* gnu_pnt = new Node(value);
-				gnu_pnt->next = NULL;
-				Node* temp = head;
-				bool test = true;
-				while (test) {
-					if (temp->next == NULL) {
-						temp->next = gnu_pnt;
-						delete temp;
-						test = false;
-					}
-					temp = temp->next;
-				}
+        tail = new Node(value);
+        Node* temp = head;
+        while (temp != NULL) {
+        temp = temp->next;
+        }
+        temp->next = tail;
 			}
 		}
 		else {
@@ -151,8 +140,7 @@ class LinkedList : public LinkedListInterface<T>
 
 	string toString() {
 		if (head == NULL) {
-			string fail = "Failure!";
-			return fail;
+			return NULL;
 		}
 		else {
 			stringstream ss;
@@ -182,21 +170,21 @@ class LinkedList : public LinkedListInterface<T>
         Node(const T& data_item, Node* next_ptr = NULL) : data(data_item), next(next_ptr) {}
       };
       Node* head = NULL;
+      Node* tail = NULL;
 
       bool find(T value) {
-    		Node* temp = head;
-    		if (temp == NULL) {
-    			delete temp;
-    			return false;
-    		}
-    		while (temp->data != value) {
-    			temp = temp->next;
-    			if (temp->data == value) {
-    				delete temp;
-    				return true;
-    			}
-    		}
-    	};
+        Node* temp = head;
+        if (temp == NULL) {
+          return false;
+        }
+        while (temp != NULL) {
+          if (temp->data == value) {
+            return true;
+          }
+          temp = temp->next;
+        }
+          return false;
+      }
 
 };
 #endif
