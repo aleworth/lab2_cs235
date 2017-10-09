@@ -12,9 +12,9 @@ template<typename T>
 
 class LinkedList : public LinkedListInterface<T>
 {
-  public:
-    LinkedList() {};
-    ~LinkedList() {};
+public:
+	LinkedList() {};
+	~LinkedList() {};
 
 
 	void insertHead(T value) {
@@ -25,14 +25,12 @@ class LinkedList : public LinkedListInterface<T>
 			if (head == NULL) {
 				head = new Node(value);
 				head->next = NULL;
-        cout << "--Inserted with new Head" << endl;
 			}
 			else {
 				head = new  Node(value, head);
-        cout << "--Inserted at Head with existing" << endl;
 			}
 		}
-  };
+	};
 
 	void insertTail(T value) {
 
@@ -42,12 +40,13 @@ class LinkedList : public LinkedListInterface<T>
 				insertHead(value);
 			}
 			else if (head != NULL) {
-        tail = new Node(value);
-        Node* temp = head;
-        while (temp != NULL) {
-        temp = temp->next;
-        }
-        temp->next = tail;
+				tail = new Node(value);
+				tail->next = NULL;
+				Node* temp = head;
+				while (temp->next != NULL) {
+					temp = temp->next;
+				}
+				temp->next = tail;
 			}
 		}
 		else {
@@ -55,7 +54,7 @@ class LinkedList : public LinkedListInterface<T>
 		}
 	};
 
-    void insertAfter(T value, T insertionNode) {
+	void insertAfter(T value, T insertionNode) {
 		bool check = find(value);
 		bool recheck = find(insertionNode);
 		if (recheck == true && check == false) {
@@ -63,9 +62,9 @@ class LinkedList : public LinkedListInterface<T>
 			while (temp->data != insertionNode) {
 				temp = temp->next;
 			}
-			Node* gnu_pnt2 = new Node(value);
-			gnu_pnt2->next = temp->next;
-			temp->next = gnu_pnt2;
+			gnu_pnt = new Node(value);
+			gnu_pnt->next = temp->next;
+			temp->next = gnu_pnt;
 		}
 		else if (recheck == false) {
 			cout << "insertionNode not found." << endl;
@@ -74,9 +73,9 @@ class LinkedList : public LinkedListInterface<T>
 			cout << "T is already in the current list." << endl;
 		}
 
-  };
+	};
 
-    void remove(T value) {
+	void remove(T value) {
 		bool check = find(value);
 		if (check == true) {
 			if (value == head->data) {
@@ -88,19 +87,16 @@ class LinkedList : public LinkedListInterface<T>
 				Node* temp2 = head;
 				while (temp2->next->data != value) {
 					temp2 = temp2->next;
-					if ((temp2->next == NULL) && (temp2->next->data != value)) {
-						break;
-					}
 				}
 				Node* temp3 = temp2->next;
-				temp2 = temp3->next;
+				temp2->next = temp3->next;
 				delete temp3;
 			}
 		}
 		else {
 			cout << "Value is not in the current Linked List." << endl;
 		}
-  };
+	};
 
 	void clear() {
 		while (head != NULL) {
@@ -109,9 +105,14 @@ class LinkedList : public LinkedListInterface<T>
 	};
 
 	T at(int index) {
-		int check = size();
-		if (check < index) {
-			throw out_of_range ("out_of_range");
+		int check = 0;
+		int size_check = size();
+		int range_check = size();
+		if (check == size_check) {
+			throw out_of_range("out_of_range");
+		}
+		else if (index < check || index > (range_check - 1)) {
+			throw out_of_range("out_of_range");
 		}
 		else {
 			int i = 0;
@@ -140,11 +141,11 @@ class LinkedList : public LinkedListInterface<T>
 
 	string toString() {
 		if (head == NULL) {
-			return NULL;
+			return "";
 		}
 		else {
 			stringstream ss;
-      string answer;
+			string answer;
 			Node* temp6 = head;
 			while (temp6 != NULL) {
 				if (temp6 == head) {
@@ -158,33 +159,33 @@ class LinkedList : public LinkedListInterface<T>
 				}
 			}
 			delete temp6;
-      ss >> answer;
-			return answer;
+			return ss.str();
 		}
 	};
 
-  private:
-      struct Node {
-        T data;
-        Node* next;
-        Node(const T& data_item, Node* next_ptr = NULL) : data(data_item), next(next_ptr) {}
-      };
-      Node* head = NULL;
-      Node* tail = NULL;
+private:
+	struct Node {
+		T data;
+		Node* next;
+		Node(const T& data_item, Node* next_ptr = NULL) : data(data_item), next(next_ptr) {}
+	};
+	Node* head = NULL;
+	Node* tail = NULL;
+	Node* gnu_pnt = NULL;
 
-      bool find(T value) {
-        Node* temp = head;
-        if (temp == NULL) {
-          return false;
-        }
-        while (temp != NULL) {
-          if (temp->data == value) {
-            return true;
-          }
-          temp = temp->next;
-        }
-          return false;
-      }
+	bool find(T value) {
+		Node* temp = head;
+		if (temp == NULL) {
+			return false;
+		}
+		while (temp != NULL) {
+			if (temp->data == value) {
+				return true;
+			}
+			temp = temp->next;
+		}
+		return false;
+	}
 
 };
 #endif
